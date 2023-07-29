@@ -2,13 +2,14 @@ package org.example.chapter2.Item16;
 
 import java.awt.*;
 
+// public클래스에서 필드를 직접 노출하지 말라는 규칙을 어기는 사례 : Dimension 클래스
 public class DimensionEx {
 
     public static void main(String[] args) {
         Button button = new Button("Button!!");
         button.setBounds(0,0,20,10);
 
-        Dimension size = button.getSize(); // getSize가 리턴하는것이 Dimension
+        Dimension size = button.getSize();
         System.out.println(size.height);
         System.out.println(size.width);
 
@@ -26,10 +27,16 @@ public class DimensionEx {
 
 /*
 
-java.awt.Dimension 클래스 - 특정 영역의 사각형과 폭과 높이의 값을 관리할 수 있도록 도와주는 클래스
-: awt패키지가 아니지만 필드에 접근하여 사용하고 있으며 Dimension클래스 내부를 보면 필드를 public하게 노출하고 있음
-  height, width가 언제 어디서 바뀔지 모르기 때문에 사용하는 클라이언트쪽에서 방어적복사를 사용해야함
-  언제 어디서 Dimension을 이용하더라도 copy를 통해서 사용해야되며 copy하는 순간부터 불필요한 인스턴트를 생성해 point예제 동일한 문제 발생함
+
+java.awt.Dimension 클래스는 특정 영역의 사각형과 폭과 높이의 값을 관리할 수 있도록 도와주는 자바 라이브러리로
+: awt패키지가 아니지만 직접 필드에 접근하여 사용하고 있으며
+  Dimension클래스 내부를 보면 필드를 public하게 노출하고 있음 ex) public int width;  public int height;
+  height, width가 언제 어디서 바뀔지 모르기 때문에 16-1 예제코드와 동일한 문제가 발생할수 있다.
+  마찬가지로 사용하는 클라이언트쪽에서 방어적복사를 사용하는 것을 권장
+
+  위의 예시로
+  방어적 복사를 사용하면  언제 어디서 Dimension을 이용하더라도 copy를 통해서 사용해야되며
+  copy하는 순간부터 불필요한 인스턴트를 생성하게 됨
 */
 
 
@@ -37,8 +44,7 @@ java.awt.Dimension 클래스 - 특정 영역의 사각형과 폭과 높이의 �
 
 /*
 
-참고페이지
-
+<참고페이지>
 p.378 : 아이템 67 - 최적화는 신중히 하라
 public 타입을 가변으로 만들면, 내부 데이터를 변경할수 있게 만들려면 불필요한 방어 복사를 수없이 유발할수 있음!
 
